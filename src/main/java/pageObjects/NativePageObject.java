@@ -6,12 +6,22 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class NativePageObject  {
+public class NativePage {
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
     WebElement signInBtn;
 
-    public NativePageObject(AppiumDriver appiumDriver) {
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_button")
+    private WebElement registerBtn;
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_email")
+    WebElement emailField;
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_pwd")
+    WebElement passwordField;
+
+
+
+    public NativePage(AppiumDriver appiumDriver) {
         PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
     }
 
