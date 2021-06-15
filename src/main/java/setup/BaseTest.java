@@ -6,6 +6,8 @@ import org.testng.annotations.*;
 import pageObjects.NativePageObject;
 import pageObjects.PageObject;
 import pageObjects.WebPageObject;
+import setup.IDriver;
+import setup.IPageObject;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -15,8 +17,9 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest implements IDriver {
 
     private static AppiumDriver appiumDriver; // singleton
-    private IPageObject po;
+    private static IPageObject po;
     private NativePageObject nativePageObject;
+    private WebPageObject webPO;
 
 
     @Override
@@ -24,6 +27,10 @@ public class BaseTest implements IDriver {
 
     public IPageObject getPo() {
         return po;
+    }
+
+    public WebPageObject getWebPO() {
+        return webPO;
     }
 
 //    private IPageObject getPo() {
@@ -49,7 +56,7 @@ public class BaseTest implements IDriver {
 
     @AfterSuite(alwaysRun = true)
     public void tearDown() throws Exception {
-        System.out.println("After");
+        System.out.println("After" + appiumDriver.getContext());
         appiumDriver.closeApp();
     }
 
@@ -82,10 +89,11 @@ public class BaseTest implements IDriver {
     private void setPageObject(String appType, AppiumDriver appiumDriver) throws Exception {
 
         switch (appType) {
-//            case "web":
-//                webPO = new WebPageObject(appiumDriver);
-//                break;
+            case "web":
+                webPO = new WebPageObject(appiumDriver);
+                break;
             case "native":
+                po = new PageObject(appType, appiumDriver);
                 nativePageObject = new NativePageObject(appiumDriver);
                 break;
             default:

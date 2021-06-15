@@ -10,8 +10,11 @@
                 <include name="native"/>
             </run>
         </groups>
-        <packages>
-            <package name="scenarios"/>
-        </packages>
+<!--        <packages>-->
+<!--            <package name="scenarios"/>-->
+<!--        </packages>-->
+        <classes>
+            <class name="scenarios.NativeMobileTests"></class>
+        </classes>
     </test>
 </suite>
