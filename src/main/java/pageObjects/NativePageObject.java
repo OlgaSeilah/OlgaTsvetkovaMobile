@@ -6,24 +6,30 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class NativePage {
+public class NativePageObject  {
+    NativeLoginPage nativeLoginPage;
+    NativeRegistrationPage nativeRegistrationPage;
+    NativeBudgetActivityPage nativeBudgetActivityPage;
 
-    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
-    WebElement signInBtn;
-
-    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_button")
-    private WebElement registerBtn;
-
-    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_email")
-    WebElement emailField;
-    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_pwd")
-    WebElement passwordField;
-
-
-
-    public NativePage(AppiumDriver appiumDriver) {
-        PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
+    public NativePageObject(AppiumDriver appiumDriver) {
+        nativeLoginPage = new NativeLoginPage(appiumDriver);
+        nativeRegistrationPage = new NativeRegistrationPage(appiumDriver);
+        nativeBudgetActivityPage = new NativeBudgetActivityPage(appiumDriver);
     }
+
+    public NativeRegistrationPage getNativeRegistrationPage() {
+        return nativeRegistrationPage;
+    }
+
+    public NativeLoginPage getNativeLoginPage() {
+        return nativeLoginPage;
+    }
+
+    public NativeBudgetActivityPage getNativeBudgetActivityPage() {
+        return nativeBudgetActivityPage;
+    }
+
+
 
 
 }

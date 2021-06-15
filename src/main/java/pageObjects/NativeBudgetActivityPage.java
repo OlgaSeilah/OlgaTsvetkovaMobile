@@ -6,14 +6,15 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class BudgetActivityPage {
+public class NativeBudgetActivityPage {
 
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/" +
             "android.widget.LinearLayout/android.widget.FrameLayout/" +
-            "android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.TextView")
+            "android.view.ViewGroup/android.widget.FrameLayout[2]/" +
+            "android.view.ViewGroup/android.widget.TextView")
     WebElement title;
 
-    public BudgetActivityPage(AppiumDriver appiumDriver) {
+    public NativeBudgetActivityPage(AppiumDriver appiumDriver) {
         PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
     }
 
