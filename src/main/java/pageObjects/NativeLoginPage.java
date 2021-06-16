@@ -8,10 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class NativeLoginPage {
 
-    public NativeLoginPage(AppiumDriver appiumDriver) {
-        PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
-    }
-
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
     WebElement signInBtn;
 
@@ -32,6 +28,10 @@ public class NativeLoginPage {
 
     public void goToRegistration() {
         registerBtn.click();
+    }
+
+    public NativeLoginPage(AppiumDriver appiumDriver) {
+        PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
     }
 
 

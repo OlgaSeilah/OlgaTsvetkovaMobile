@@ -15,4 +15,14 @@ public class DataProviders {
                 {email, name, password, title}
         };
     }
+
+    @DataProvider
+    public Object[][] webTestData() {
+        String url = TestDataProps.getTestDataProps().getProperty("url");
+        String wordForSearch = TestDataProps.getTestDataProps().getProperty("wordForSearch");
+
+        return new Object[][]{
+                {url, wordForSearch}
+        };
+    }
 }
