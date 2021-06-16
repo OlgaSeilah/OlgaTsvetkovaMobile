@@ -10,8 +10,11 @@
                 <include name="web"/>
             </run>
         </groups>
-        <packages>
-            <package name="scenarios"/>
-        </packages>
+<!--        <packages>-->
+<!--            <package name="scenarios"/>-->
+<!--        </packages>-->
+        <classes>
+            <class name="scenarios.WebMobileTests"></class>
+        </classes>
     </test>
 </suite>

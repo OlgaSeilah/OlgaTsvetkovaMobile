@@ -2,8 +2,12 @@ package setup;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.*;
-import pageObjects.PageObject;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
+import pageObjects.NativePageObject;
+import pageObjects.WebPageObject;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -13,18 +17,28 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest implements IDriver {
 
     private static AppiumDriver appiumDriver; // singleton
-    IPageObject po;
+    private NativePageObject nativePageObject;
+    private WebPageObject webPageObject;
+
 
     @Override
     public AppiumDriver getDriver() { return appiumDriver; }
 
-    public IPageObject getPo() {
-        return po;
+    public WebPageObject getWebPO() {
+        return webPageObject;
+    }
+
+    public NativePageObject getNativePO() {
+        return nativePageObject;
     }
 
     @Parameters({"platformName","appType","deviceName","browserName","app"})
     @BeforeSuite(alwaysRun = true)
-    public void setUp(String platformName, String appType, String deviceName, @Optional("") String browserName, @Optional("") String app) throws Exception {
+    public void setUp(@Optional("") String platformName, //Idea asked for add @Optionals everywhere
+                      @Optional("") String appType,
+                      @Optional("") String deviceName,
+                      @Optional("") String browserName,
+                      @Optional("") String app) throws Exception {
         System.out.println("Before: app type - "+appType);
         setAppiumDriver(platformName, deviceName, browserName, app);
         setPageObject(appType, appiumDriver);
@@ -33,7 +47,7 @@ public class BaseTest implements IDriver {
 
     @AfterSuite(alwaysRun = true)
     public void tearDown() throws Exception {
-        System.out.println("After");
+        System.out.println("After" + appiumDriver.getContext());
         appiumDriver.closeApp();
     }
 
@@ -60,7 +74,17 @@ public class BaseTest implements IDriver {
     }
 
     private void setPageObject(String appType, AppiumDriver appiumDriver) throws Exception {
-        po = new PageObject(appType, appiumDriver);
+
+        switch (appType) {
+            case "native":
+                nativePageObject = new NativePageObject(appiumDriver);
+                break;
+            case "web":
+                webPageObject = new WebPageObject(appiumDriver);
+                break;
+            default:
+                throw new Exception("Can't create a page object for " + appType);
+        }
     }
 
 
