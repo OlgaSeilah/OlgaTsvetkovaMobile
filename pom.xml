@@ -8,6 +8,11 @@
     <artifactId>mobileTaTrainingV2</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <token>eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJMR0xsSnVPQmxyUHF3Wi1JaTQ1VG1KQnVfakdVNnRLV3hKdm1JQ0w3cDU4In0.eyJleHAiOjE2MjY4NjQxOTcsImlhdCI6MTYyNDI3MjE5NywianRpIjoiNjgxNTNkYjUtNTEwYy00ODYzLTg3ZDctMmE0OTViNjYzMGQwIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5lcG0tdHN0Zi5wcm9qZWN0cy5lcGFtLmNvbS9hdXRoL3JlYWxtcy9wcm9kdWN0aW9uIiwiYXVkIjoibW9iaWxlY2xvdWQiLCJzdWIiOiI2NTY3NmZiMC1kNTI2LTQ0ZWQtYTgyZS1hNDU3M2VhOTAzNWEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJtb2JpbGVjbG91ZCIsInNlc3Npb25fc3RhdGUiOiI3NjBjYzIwNi04ZWYzLTRjYzMtODdiMi03ODQwMzUyOWM5MTEiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImNsb3VkX3VzZXIiLCJvZmZsaW5lX2FjY2VzcyJdfSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBvZmZsaW5lX2FjY2VzcyBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJncm91cF9pZCI6IjJlM2Q3M2Q4LTA2MGEtNDQyNy1iNzhhLWExZjRlNGFiMDk0NCIsIm5hbWUiOiJPbGdhIFRzdmV0a292YTEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJvbGdhX3RzdmV0a292YTFAZXBhbS5jb20iLCJnaXZlbl9uYW1lIjoiT2xnYSIsImZhbWlseV9uYW1lIjoiVHN2ZXRrb3ZhMSIsImVtYWlsIjoib2xnYV90c3ZldGtvdmExQGVwYW0uY29tIn0.VEkBqJA1pq2XtjYTQfbff4qb46YEOUBBzrSwx4rtFqPf1K6fvz-BeK8KZ2zKhEtlyrN-XwQj2Htwoy3P0BxBy5rzEKBvkZjTzvglZ5mUAFgE63a8w_nL0nkY09TSqIbRaO4Q0gKkIcmB0XQd-LG5kPct7nGXjWv5L8zOx42zESontJBVvq32uEMwVYDEaxXJ0cyDiNqLnlEIVdk1OxcvEqQxqWkRs4gkO__XYCMQvFfUWK1bPUOkcq-1Bl44boQZC7JLHpgIPaSYK_gVmJP0vwZXL9V5_db-McGpkUCwRexGrTOWoZsu4KrsyV8YPywEy5jW64v1iapq6lOHw5i_vg</token>
+    </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>io.appium</groupId>
@@ -26,7 +31,6 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <plugins>
             <plugin>
@@ -38,7 +42,8 @@
                         <suiteXmlFile>${suite.file}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
-                        <ts.appium>http://localhost:4723/wd/hub</ts.appium>
+<!--                        <ts.appium>http://localhost:4723/wd/hub</ts.appium>-->
+                        <ts.appium>https://EPM-TSTF:${token}@mobilecloud.epam.com/wd/hub</ts.appium>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -72,6 +77,46 @@
             </activation>
             <properties>
                 <suite.file>./src/test/resources/webTNG.xml</suite.file>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>webCloudAndroid</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>./src/test/resources/webCloudAndroid.xml</suite.file>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>webCloudIOS</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>./src/test/resources/webCloudIOS.xml</suite.file>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>nativeCloudAndroid</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>./src/test/resources/nativeCloudAndroid.xml</suite.file>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>nativeCloudIOS</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>./src/test/resources/nativeCloudIOS.xml</suite.file>
             </properties>
         </profile>
     </profiles>

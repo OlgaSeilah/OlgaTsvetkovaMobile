@@ -32,15 +32,20 @@ public class BaseTest implements IDriver {
         return nativePageObject;
     }
 
-    @Parameters({"platformName","appType","deviceName","browserName","app"})
+    @Parameters({"platformName", "deviceName", "udid", "browserName","app", "appPackage", "appActivity", "appType", "bundleId"})
     @BeforeSuite(alwaysRun = true)
-    public void setUp(@Optional("") String platformName, //Idea asked for add @Optionals everywhere
-                      @Optional("") String appType,
+    public void setUp(@Optional("") String platformName,
                       @Optional("") String deviceName,
+                      @Optional("") String udid,
                       @Optional("") String browserName,
-                      @Optional("") String app) throws Exception {
+                      @Optional("") String app,
+                      @Optional("") String appPackage,
+                      @Optional("") String appActivity,
+                      @Optional("") String appType,
+                      @Optional("") String bundleId
+                      ) throws Exception {
         System.out.println("Before: app type - "+appType);
-        setAppiumDriver(platformName, deviceName, browserName, app);
+        setAppiumDriver(platformName, deviceName, udid, browserName, app, appPackage, appActivity, appType, bundleId);
         setPageObject(appType, appiumDriver);
 
     }
@@ -51,7 +56,9 @@ public class BaseTest implements IDriver {
         appiumDriver.closeApp();
     }
 
-    private void setAppiumDriver(String platformName, String deviceName, String browserName, String app){
+    private void setAppiumDriver(String platformName, String deviceName, String udid,
+                                 String browserName, String app, String appPackage,
+                                 String appActivity, String appType, String bundleId){
         DesiredCapabilities capabilities = new DesiredCapabilities();
         //mandatory Android capabilities
         capabilities.setCapability("platformName",platformName);
@@ -62,11 +69,18 @@ public class BaseTest implements IDriver {
         capabilities.setCapability("browserName", browserName);
         capabilities.setCapability("chromedriverDisableBuildCheck","true");
 
-        try {
-            appiumDriver = new AppiumDriver(new URL(System.getProperty("ts.appium")), capabilities);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        capabilities.setCapability("appPackage", appPackage);
+        capabilities.setCapability("appActivity", appActivity);
+
+        capabilities.setCapability("bundleId", bundleId);
+        capabilities.setCapability("udid", udid);
+
+//        try {
+            System.out.println(System.getProperty("ts.appium"));
+//            appiumDriver = new AppiumDriver(new URL(System.getProperty("ts.appium")), capabilities);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
 
         // Timeouts tuning
         appiumDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
